@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
-import { Roboto } from 'next/font/google';
+import { Poppins } from 'next/font/google';
 import './globals.css';
 import React from 'react';
 import Navbar from '@/components/navbar/navbar';
 import Footer from '@/components/footer/footer';
 
-const roboto = Roboto({
+const poppins = Poppins({
     weight: ['100', '300', '400', '500', '700', '900'],
     style: ['normal', 'italic'],
     subsets: ['latin'],
@@ -24,7 +24,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={roboto.className}>
+            <body className={poppins.className}>
                 <Navbar />
                 {children}
                 <Footer />
