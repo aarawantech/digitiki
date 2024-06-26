@@ -3,10 +3,18 @@
 import React from 'react';
 import { FaArrowRight } from 'react-icons/fa';
 
-const BookNow = ({ type }: { type: 'primary' | 'secondary' }) => {
+const BookNow = ({
+    type,
+    style,
+}: {
+    type: 'primary' | 'secondary';
+    style?: string;
+}) => {
     if (type === 'primary')
         return (
-            <button className="text-center text-white w-full py-4 px-12 font-bold border border-1 bg-[#193568]">
+            <button
+                className={`text-center text-white w-full py-4 px-12 font-bold border border-1 bg-[#193568] ${style}`}
+            >
                 Book Now
             </button>
         );
