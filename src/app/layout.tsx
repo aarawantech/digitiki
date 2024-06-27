@@ -4,6 +4,7 @@ import './globals.css';
 import React from 'react';
 import Navbar from '@/components/navbar/navbar';
 import Footer from '@/components/footer/footer';
+import Providers from '@/components/login-button/providers';
 
 const poppins = Poppins({
     weight: ['100', '300', '400', '500', '700', '900'],
@@ -25,9 +26,11 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={poppins.className}>
-                <Navbar />
-                {children}
-                <Footer />
+                <Providers>
+                    <Navbar />
+                    {children}
+                    <Footer />
+                </Providers>
             </body>
         </html>
     );
