@@ -3,22 +3,25 @@
 import React, { useEffect, useState } from 'react';
 import { Select } from '@headlessui/react';
 import { getCategoryData, getCurrentData } from '@/app/api/page/page';
+import { CategoryTypes, EventDataTypes } from '@/app/types/types';
 import EventCard from '../event-card/event-card';
 
 const CurrentEvent = () => {
-    const [CategoryData, setCategoryData] = useState<any>();
-    const [CurrentData, setCurrentData] = useState<any>();
-    const [SelectedValue, setSelectedValue] = useState<any>('All');
+    const [CategoryData, setCategoryData] = useState<CategoryTypes | null>(
+        null
+    );
+    const [CurrentData, setCurrentData] = useState<EventDataTypes | null>(null);
+    const [SelectedValue, setSelectedValue] = useState<string>('All');
 
     useEffect(() => {
         getCategoryData().then((res) => {
-            setCategoryData(res);
+            setCategoryData(res.results);
         });
     }, []);
 
     useEffect(() => {
         getCurrentData(SelectedValue).then((res) => {
-            setCurrentData(res);
+            setCurrentData(res.results);
         });
     }, [SelectedValue]);
 
@@ -36,7 +39,7 @@ const CurrentEvent = () => {
                             onChange={(e) => setSelectedValue(e.target.value)}
                         >
                             <option value="All">All</option>
-                            {CategoryData.results.map((category: any) => (
+                            {CategoryData.map((category: any) => (
                                 <option
                                     key={category.uuid}
                                     value={category.uuid}
@@ -48,7 +51,7 @@ const CurrentEvent = () => {
                     </button>
                 </div>
                 <div className="flex justify-between flex-wrap gap-6">
-                    {CurrentData.results.map((data: any) => (
+                    {CurrentData.map((data: any) => (
                         <EventCard key={data.uuid} data={data} />
                     ))}
                 </div>

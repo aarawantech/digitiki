@@ -3,22 +3,27 @@
 import React, { useEffect, useState } from 'react';
 import { getCategoryData, getUpcomingData } from '@/app/api/page/page';
 import { Select } from '@headlessui/react';
+import { CategoryTypes, EventDataTypes } from '@/app/types/types';
 import EventCard from '../event-card/event-card';
 
 const UpcomingEvents = () => {
-    const [CategoryData, setCategoryData] = useState<any>();
-    const [UpcomingData, setUpcomingData] = useState<any>();
+    const [CategoryData, setCategoryData] = useState<CategoryTypes | null>(
+        null
+    );
+    const [UpcomingData, setUpcomingData] = useState<EventDataTypes | null>(
+        null
+    );
     const [SelectedValue, setSelectedValue] = useState<any>('All');
 
     useEffect(() => {
         getCategoryData().then((res) => {
-            setCategoryData(res);
+            setCategoryData(res.results);
         });
     }, []);
 
     useEffect(() => {
         getUpcomingData(SelectedValue).then((res) => {
-            setUpcomingData(res);
+            setUpcomingData(res.results);
         });
     }, [SelectedValue]);
 
@@ -36,7 +41,7 @@ const UpcomingEvents = () => {
                             onChange={(e) => setSelectedValue(e.target.value)}
                         >
                             <option value="All">All</option>
-                            {CategoryData.results.map((category: any) => (
+                            {CategoryData.map((category) => (
                                 <option
                                     key={category.uuid}
                                     value={category.uuid}
@@ -48,7 +53,7 @@ const UpcomingEvents = () => {
                     </button>
                 </div>
                 <div className="flex justify-between flex-wrap gap-6">
-                    {UpcomingData.results.map((data: any) => (
+                    {UpcomingData.map((data) => (
                         <EventCard key={data.uuid} data={data} />
                     ))}
                 </div>

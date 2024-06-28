@@ -1,9 +1,10 @@
 import Image from 'next/image';
 import React from 'react';
 import TruncateText from '@/utils/truncate-text';
+import { EventDataType } from '@/app/types/types';
 import BookNow from '../book-now/book-now';
 
-const EventCard = ({ data }: any) => {
+const EventCard = ({ data }: { data: EventDataType }) => {
     if (data)
         return (
             <div className="rounded-md w-[360px] drop-shadow-md bg-white">
