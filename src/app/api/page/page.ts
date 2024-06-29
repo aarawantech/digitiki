@@ -37,3 +37,12 @@ export const getUpcomingData = async (category?: string) => {
     }
     return res.json();
 };
+export const getBookingForm = async (id?: string) => {
+    const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/form/retrieve/${id}`
+    );
+    if (!res.ok) {
+        throw new Error('Failed to fetch data');
+    }
+    return res.json();
+};
