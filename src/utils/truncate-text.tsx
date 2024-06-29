@@ -62,7 +62,7 @@ const TruncateText = ({
                                     No, Cancel
                                 </button>
                                 <BookNow
-                                    link={`/event-booking/${data.uuid}`}
+                                    link={`/booking/${data.uuid}`}
                                     style="px-20"
                                     type="primary"
                                 />

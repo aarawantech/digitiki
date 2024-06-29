@@ -29,10 +29,7 @@ const EventCard = ({ data }: { data: EventDataType }) => {
                             text={data.long_description}
                         />
                     </div>
-                    <BookNow
-                        link={`/event-booking/${data.uuid}`}
-                        type="primary"
-                    />
+                    <BookNow link={`/booking/${data.uuid}`} type="primary" />
                 </div>
             </div>
         );
