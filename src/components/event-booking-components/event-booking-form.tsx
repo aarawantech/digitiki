@@ -17,6 +17,7 @@ import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { useSession } from 'next-auth/react';
 import InputField from './input-field';
 import { useForm } from './use-form';
 
@@ -47,7 +48,34 @@ const EventBookingForm = ({ bookingId }: { bookingId: string }) => {
         }
     }, [bookingId]);
 
-    console.log(useForm());
+    const sessionData = useSession();
+
+    const handleSubmitForm = async (e: any) => {
+        e.preventDefault();
+        if (sessionData) {
+            const formData = {
+                registration: {
+                    full_name: sessionData.data?.user?.name,
+                    event: bookingId,
+                    email: sessionData.data?.user?.email,
+                },
+                answers: formStore.answers,
+            };
+            const res = await fetch(
+                `${process.env.NEXT_PUBLIC_BASE_URL}/form/submit/`,
+                {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData),
+                }
+            );
+            if (!res.ok) {
+                throw new Error(`Error: ${res.status} - ${res.statusText}`);
+            }
+            const resData = await res.json();
+            console.log(resData);
+        }
+    };
 
     if (getFormData)
         return (
@@ -206,7 +234,10 @@ const EventBookingForm = ({ bookingId }: { bookingId: string }) => {
                                         </Field>
                                     ))}
                                 </div>
-                                <button className="py-4 px-10 bg-[#193568] text-white mt-8 rounded-lg">
+                                <button
+                                    onClick={handleSubmitForm}
+                                    className="py-4 px-10 bg-[#193568] text-white mt-8 rounded-lg"
+                                >
                                     Pay Now
                                 </button>
                             </form>
